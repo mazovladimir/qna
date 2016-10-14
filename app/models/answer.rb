@@ -1,3 +1,5 @@
 class Answer < ActiveRecord::Base
-  validates :title, :body, presence: true
+  validates :body, presence: true, length: { minimum: 10 }
+
+  belongs_to :question
 end
