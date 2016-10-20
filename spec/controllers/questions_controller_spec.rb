@@ -2,18 +2,30 @@ require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
   describe 'GET #index' do
-    it 'populates an array of all questions' do
-      question1 = FactoryGirl.create(:question, title: 'more than 10 symbols')
-      question2 = FactoryGirl.create(:question, title: 'more than 10 symbols')
+    let(:questions) { create_list(:question, 2, title: 'more than 10 symbols')}
 
+    before do
       get :index
-      
-      expect(assigns(:questions)).to match_array([question1, question2])
+    end
+
+    it 'populates an array of all questions' do
+      expect(assigns(:questions)).to match_array(questions)
     end
 
     it 'renders index view' do
-      get :index
       expect(response).to render_template :index
+    end
+  end
+
+  describe 'GET #new' do
+    before {get :new}
+
+    it 'assigns a new Question to @question' do
+      expect(assigns(:question)).to be_a_new(Question)      
+    end
+
+    it 'renders new view' do
+      expect(response).to render_template :new
     end
   end
 end
