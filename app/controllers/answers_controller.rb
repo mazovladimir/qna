@@ -1,5 +1,5 @@
 class AnswersController < ApplicationController
-  before_action :set_question, only: [:new, :create]
+  before_action :set_question, only: [ :create ]
 
   def index
     @answers = Answer.all
@@ -9,11 +9,15 @@ class AnswersController < ApplicationController
     @answer = Answer.new
   end
 
+  def show
+    @answer = Answer.find(params[:id])
+  end
+
   def create
     @answer = @question.answers.new(answer_params)
 
     if @answer.save
-      redirect_to @answer
+      redirect_to @question
     else
       render 'new'
     end
