@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
+  let(:answer) { create(:answer, body: 'more than 10 symbols')}
   describe 'GET #index' do
     let(:answers) { create_list(:answer, 2, body: 'more than 10 symbols')}
     let(:myquestion) { create(:question, title: 'more than 10 symbols')}
@@ -15,6 +16,18 @@ RSpec.describe AnswersController, type: :controller do
 
     it 'renders index view' do
       expect(response).to render_template :index
+    end
+  end
+
+  describe 'GET #show' do
+    before { get :show, params: { id: answer} }
+
+    it 'assigns the requested answer to @answer' do
+      expect(assigns(:answer)).to eq answer
+    end
+
+    it 'renders show view' do
+      expect(response).to render_template :show
     end
   end
 
@@ -43,7 +56,7 @@ RSpec.describe AnswersController, type: :controller do
       end
 
       it 'redirects to show view' do
-        post :create, params: { answer: attributes_for(:answer), question_id: myquestion }
+        post :create, params: { answer: attributes_for(:answer) }
         expect(response).to redirect_to question_path(assigns(:question))
       end
     end
