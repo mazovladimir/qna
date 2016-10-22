@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
-  let(:answer) { create(:answer, body: 'more than 10 symbols')}
-  let(:myquestion) { create(:question, title: 'more than 10 symbols')}
+  let(:myquestion) { create(:question, title: 'more than 10 symbols') }
+  let(:answer) { create(:answer, body: 'more than 10 symbols') }
   describe 'GET #index' do
-    let(:answers) { create_list(:answer, 2, body: 'more than 10 symbols')}
+    let(:answers) { create(:answer, body: 'more than 10 symbols') }
 
     before { get :index, params: { question_id: myquestion } }
 
@@ -18,7 +18,7 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'GET #show' do
-    before { get :show, params: { id: answer } }
+    before { get :show, params: { id: answer, question_id: myquestion } }
 
     it 'assigns the requested answer to @answer' do
       expect(assigns(:answer)).to eq answer
