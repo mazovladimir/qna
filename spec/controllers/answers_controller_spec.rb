@@ -3,20 +3,6 @@ require 'rails_helper'
 RSpec.describe AnswersController, type: :controller do
   let(:myquestion) { create(:question, title: 'more than 10 symbols') }
   let(:answer) { create(:answer, body: 'more than 10 symbols') }
-  describe 'GET #index' do
-    let(:answers) { create(:answer, body: 'more than 10 symbols') }
-
-    before { get :index, params: { question_id: myquestion } }
-
-    it 'populates an array of all answers' do
-      expect(assigns(:answers)).to match_array(answers)
-    end
-
-    it 'renders index view' do
-      expect(response).to render_template :index
-    end
-  end
-
   describe 'GET #show' do
     before { get :show, params: { id: answer, question_id: myquestion } }
 

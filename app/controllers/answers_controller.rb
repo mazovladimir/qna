@@ -1,10 +1,6 @@
 class AnswersController < ApplicationController
   before_action :set_question, only: [ :create ]
 
-  def index
-    @answers = Answer.all
-  end
-
   def new
     @answer = Answer.new
   end
