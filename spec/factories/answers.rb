@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :answer do
-    body "More than 10 symbols"
+    body "lot More than 10 symbols"
     question Question.new
   end
 
