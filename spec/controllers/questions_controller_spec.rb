@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe QuestionsController, type: :controller do
   let(:question) { create(:question, title: 'more than 10 symbols') }
   describe 'GET #index' do
-    let(:questions) { create_list(:question, 2, title: 'more than 10 symbols')}
+    let!(:questions) { create_list(:question, 2, title: 'more than 10 symbols')}
 
     before { get :index }
 
