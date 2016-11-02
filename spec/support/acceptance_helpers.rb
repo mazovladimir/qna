@@ -5,4 +5,8 @@ module AcceptanceMacros
     fill_in 'Password', with: user.password
     click_on 'Log in'
   end
+
+  def sign_out(user)
+    click_on 'Log out'
+  end
 end
