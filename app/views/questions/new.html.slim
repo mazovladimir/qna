@@ -3,19 +3,23 @@
   - if @question.errors.any?
     <div id="error_explanation">
       <h2>
-        = pluralize(@question.errors.count, "error")
-        this article from being saved:
+        = pluralize(@question.errors.count, "error") 
       </h2>
       <ul>
         - @question.errors.full_messages.each do |msg|
           <li> #{msg} </li>
       </ul>
     </div>
-
+  <p>
   = f.label :title
   = f.text_field :title
+  </p>
+
+  <p>
   = f.label :body
   = f.text_area :body
+  </p>
+
   = f.submit 'Create'
 
 = link_to "Log Out", destroy_user_session_path, method: :delete
