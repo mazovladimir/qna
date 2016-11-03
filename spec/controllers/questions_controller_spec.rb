@@ -1,9 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
-  let(:question) { create(:question, title: 'more than 10 symbols') }
+  let(:user) { create(:user) }
+  let(:question) { create(:question, title: 'more than 10 symbols', user: user) }
   describe 'GET #index' do
-    let!(:questions) { create_list(:question, 2, title: 'more than 10 symbols')}
+    let!(:questions) { create_list(:question, 2, title: 'more than 10 symbols', user: user) }
 
     before { get :index }
 
@@ -62,6 +63,10 @@ RSpec.describe QuestionsController, type: :controller do
     context 'with valid attributes' do
       it 'saves the new question in the database' do
         expect { post :create, params: { question: attributes_for(:question) } }.to change(Question, :count).by(1)
+      end
+
+      it 'check user-question association' do
+        expect(subject.current_user).to_not eq(nil)
       end
 
       it 'redirects to show view' do
