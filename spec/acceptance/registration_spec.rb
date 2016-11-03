@@ -10,9 +10,9 @@ feature 'User registration', %q{
 
   scenario 'Registration for the user' do
     visit new_user_registration_path
-    fill_in "Email", :with => 'mazovladimir@gmail.com'
-    fill_in "Password", :with => 'password'
-    fill_in "Password confirmation", :with => 'password'
+    fill_in "Email", with: 'mazovladimir@gmail.com'
+    fill_in "Password", with: 'password'
+    fill_in "Password confirmation", with: 'password'
 
     click_on 'Sign up'
 
