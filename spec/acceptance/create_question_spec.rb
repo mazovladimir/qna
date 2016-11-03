@@ -21,6 +21,20 @@ feature 'Create question', %q{
     expect(Question.last.body).to have_content 'text tex'
   end
 
+  scenario 'Authenticated user try to send empty form' do
+    sign_in(user)
+
+    visit questions_path
+    click_on 'Ask question'
+    fill_in 'Title', with: ''
+    fill_in 'Body', with: ''
+    click_on 'Create'
+
+    expect(page).to have_content 'Title is too short (minimum is 10 characters)'
+    expect(page).to have_content 'Body is too short (minimum is 2 characters)'
+  end
+
+
   scenario 'Non-authenticated user tries to create question' do
     visit questions_path
     click_on 'Ask question'
