@@ -1,6 +1,6 @@
 class AnswersController < ApplicationController
-  before_action :set_question, only: [ :create ]
-
+  before_action :set_question, only: [ :new, :create ]
+  
   def new
     @answer = Answer.new
   end

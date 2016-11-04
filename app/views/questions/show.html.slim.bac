@@ -6,6 +6,10 @@
   p  Тело вопроса:
     #{@question.body}
 
-  p Все комментарии:
-  - @question.answers.each do |comment|
-      p #{comment.body}
+  p Комментарий:
+  <p>
+  = f.label :answer 
+  = f.text_area :answer
+  </p>
+
+  = f.submit 'Comment'
