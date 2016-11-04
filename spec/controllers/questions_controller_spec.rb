@@ -66,7 +66,8 @@ RSpec.describe QuestionsController, type: :controller do
       end
 
       it 'check user-question association' do
-        expect(subject.current_user).to_not eq(nil)
+        post :create, params: { question: attributes_for(:question) }
+        expect(assigns(:question).user).to eq(subject.current_user)
       end
 
       it 'redirects to show view' do
