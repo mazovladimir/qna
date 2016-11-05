@@ -1,11 +1,9 @@
-= form_for @question, url: question_answers_path(@question), method: :post do |f|
+p  Вопрос: 
+  #{@question.title}
 
-  p  Вопрос: 
-    #{@question.title}
+p  Тело вопроса:
+  #{@question.body}
 
-  p  Тело вопроса:
-    #{@question.body}
-
-  p Все комментарии:
-  - @question.answers.each do |comment|
-      p #{comment.body}
+p Все комментарии:
+- @question.answers.each do |comment|
+   p #{comment.body}
