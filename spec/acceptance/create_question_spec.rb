@@ -11,14 +11,10 @@ feature 'Create question', %q{
   scenario 'Authenticated user creates question' do
     sign_in(user)
 
-    visit questions_path
-    click_on 'Ask question'
-    fill_in 'Title', with: 'Test question'
-    fill_in 'Body', with: 'text tex'
-    click_on 'Create'
+    create_question
 
     expect(Question.last.title).to have_content 'Test question'
-    expect(Question.last.body).to have_content 'text tex'
+    expect(Question.last.body).to have_content 'Text tex'
   end
 
   scenario 'Authenticated user try to send empty form' do

@@ -11,4 +11,12 @@ module AcceptanceMacros
     visit new_question_path
     click_on 'Log Out'
   end
+
+  def create_question
+    visit questions_path
+    click_on 'Ask question'
+    fill_in 'Title', with: 'Test question'
+    fill_in 'Body', with: 'Text tex'
+    click_on 'Create'
+  end
 end
