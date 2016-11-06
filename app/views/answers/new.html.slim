@@ -1,4 +1,14 @@
 = form_for @answer, url: question_answers_path do |f|
+  - if @answer.errors.any?
+    <div id="error_explanation">
+      <h2>
+        = pluralize(@answer.errors.count, "error")
+      </h2>
+      <ul>
+        - @answer.errors.full_messages.each do |msg|
+          <li> #{msg} </li>
+      </ul>
+    </div>
 
   p  Вопрос:
     #{@question.title}
