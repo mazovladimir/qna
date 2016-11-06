@@ -16,6 +16,10 @@
   p  Тело вопроса:
     #{@question.body}
 
+  p Все комментарии:
+  - @question.answers.each do |comment|
+     p #{comment.body}
+
   <p>
   p Комментарий:
   = f.label :body
