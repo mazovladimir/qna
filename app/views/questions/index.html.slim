@@ -3,7 +3,7 @@
   - if question.user == current_user
     | Вопрос: 
     = question.title
-    = link_to 'Show question', new_question_answer_path(question)
+    = link_to 'Show question', question
   </p>
 
 p= link_to 'Ask question', new_question_path
