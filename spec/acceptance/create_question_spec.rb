@@ -13,8 +13,8 @@ feature 'Create question', %q{
 
     create_question
 
-    expect(Question.last.title).to have_content 'Test question'
-    expect(Question.last.body).to have_content 'Text tex'
+    expect(page).to have_content 'Test question'
+    expect(page).to have_content 'Text tex'
   end
 
   scenario 'Authenticated user try to send empty form' do

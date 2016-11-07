@@ -1,9 +1,7 @@
 - @questions.each do |question|
-  <p>
-  - if question.user == current_user
+  p
     | Вопрос: 
     = question.title
     = link_to 'Show question', question
-  </p>
 
 p= link_to 'Ask question', new_question_path

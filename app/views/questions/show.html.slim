@@ -1,19 +1,24 @@
+- if (@answer.present? && @answer.errors.any?)
+  #error_explanation
+    h2
+      = pluralize(@answer.errors.count, "error")
+    ul
+      - @answer.errors.full_messages.each do |msg|
+        li #{msg}
 p  Вопрос: 
-  #{@question.title}
+|  #{@question.title}
 
 p  Тело вопроса:
-  #{@question.body}
+|  #{@question.body}
 
 p Все комментарии:
 - @question.answers.each do |comment|
    p #{comment.body}
 
-= form_for ([@answer, @question, Answer.new ]) do |f|
-  <p>
+= form_for ([@question, Answer.new ]) do |f|
   p Комментарий:
-    = #{f.label :body}
-    = #{f.text_area :body}
-  </p>
+  |  = #{f.label :body}
+  |  = #{f.text_area :body}
 
 
   = f.submit 'Comment'

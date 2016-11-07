@@ -15,13 +15,10 @@ feature 'Comment for the question', %q{
 
     visit questions_path
 
-    expect(page).to have_content 'Test question'
     click_on 'Show question'
     fill_in 'Body', with: 'This is my answer'
     click_on 'Comment'
 
-    expect(page).to have_content 'Test question'    
-    expect(page).to have_content 'Text tex'    
     expect(page).to have_content 'This is my answer'    
 
   end
@@ -38,5 +35,20 @@ feature 'Comment for the question', %q{
     fill_in 'Body', with: ''
     click_on 'Comment'
     expect(page).to have_content 'Body can\'t be blank'
+  end
+
+  scenario 'Unregisterd user tries to answer the question' do
+    sign_in(user)
+
+    create_question
+    visit new_question_path
+    click_on 'Log Out'
+    visit questions_path
+ 
+    click_on 'Show question'
+    fill_in 'Body', with: 'My new comment'
+    click_on 'Comment'
+    
+    expect(page).to have_content 'You need to sign in or sign up before continuing'
   end
 end

@@ -1,5 +1,6 @@
 class AnswersController < ApplicationController
-  before_action :set_question, only: [ :new, :create ]
+  before_action :authenticate_user!, only: [ :new, :create ]
+  before_action :set_question, only: [ :new, :create, :show ]
   
   def new
     @answer = Answer.new
@@ -15,7 +16,7 @@ class AnswersController < ApplicationController
     if @answer.save
       redirect_to @question
     else
-      render 'new'
+      render 'questions/show'
     end
   end
 

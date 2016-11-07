@@ -1,24 +1,18 @@
 = form_for @question do |f|
-
   - if @question.errors.any?
-    <div id="error_explanation">
-      <h2>
+    #error_explanation
+      h2
         = pluralize(@question.errors.count, "error") 
-      </h2>
-      <ul>
+      ul
         - @question.errors.full_messages.each do |msg|
-          <li> #{msg} </li>
-      </ul>
-    </div>
-  <p>
+          li #{msg} 
+  p
   = f.label :title
   = f.text_field :title
-  </p>
 
-  <p>
+  p
   = f.label :body
   = f.text_area :body
-  </p>
 
   = f.submit 'Create'
 
