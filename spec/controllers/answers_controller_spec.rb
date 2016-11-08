@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe AnswersController, type: :controller do
   let(:user) { create :user }
   let(:myquestion) { create(:question, title: 'more than 10 symbols', user: user) }
-  let(:answer) { create(:answer, body: 'more than 10 symbols' ) }
+  let(:answer) { create(:answer, body: 'more than 10 symbols', user: user ) }
   describe 'GET #show' do
     before { get :show, params: { id: answer, question_id: myquestion } }
 
@@ -41,6 +41,11 @@ RSpec.describe AnswersController, type: :controller do
       it 'redirects to show view' do
         post :create, params: { answer: attributes_for(:answer), question_id: myquestion }
         expect(response).to redirect_to question_path(assigns(:question))
+      end
+      
+      it 'check user-answer association' do
+        post :create, params: { answer: attributes_for(:answer), question_id: myquestion }
+        expect(assigns(:answer).user).to eq(subject.current_user)
       end
     end
 
