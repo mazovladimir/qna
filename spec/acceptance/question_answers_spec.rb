@@ -11,8 +11,7 @@ feature 'Comment for the question', %q{
   scenario 'Authenticated user wants to show answer for the question' do
     sign_in(user)
 
-    #create_question
-    create(:question)
+    create_question
 
     visit questions_path
 
@@ -27,8 +26,7 @@ feature 'Comment for the question', %q{
   scenario 'Authenticated user tries to fill the body with empty' do
     sign_in(user)
 
-    #create_question
-    create(:question)
+    create_question
 
     visit questions_path
 
@@ -42,8 +40,7 @@ feature 'Comment for the question', %q{
   scenario 'Unregisterd user tries to answer the question' do
     sign_in(user)
 
-    #create_question
-    create(:question)
+    create_question
 
     visit new_question_path
     click_on 'Log Out'

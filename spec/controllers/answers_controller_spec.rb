@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
-  let(:user) { create :user }
+  let!(:user) { create :user }
   let(:myquestion) { create(:question, title: 'more than 10 symbols', user: user) }
   let(:answer) { create(:answer, body: 'more than 10 symbols', user: user ) }
   describe 'GET #show' do
