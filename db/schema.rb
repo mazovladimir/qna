@@ -22,7 +22,6 @@ ActiveRecord::Schema.define(version: 20161107220059) do
     t.integer  "question_id"
     t.integer  "user_id"
     t.index ["question_id"], name: "index_answers_on_question_id", using: :btree
-    t.index ["user_id"], name: "index_answers_on_user_id", using: :btree
   end
 
   create_table "questions", force: :cascade do |t|
@@ -51,5 +50,4 @@ ActiveRecord::Schema.define(version: 20161107220059) do
   end
 
   add_foreign_key "answers", "questions"
-  add_foreign_key "answers", "users"
 end
