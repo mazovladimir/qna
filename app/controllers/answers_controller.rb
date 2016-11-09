@@ -1,6 +1,6 @@
 class AnswersController < ApplicationController
-  before_action :authenticate_user!, only: [ :new, :create ]
-  before_action :set_question, only: [ :new, :create, :show ]
+  before_action :authenticate_user!, only: [ :new, :create, :destroy ]
+  before_action :set_question, only: [ :new, :create, :show, :destroy ]
   
   def new
     @answer = Answer.new
@@ -19,6 +19,12 @@ class AnswersController < ApplicationController
     else
       render 'questions/show'
     end
+  end
+
+  def destroy
+    @answer = @question.answers.find(params[:id])
+    @answer.destroy
+    redirect_to question_path(@question)
   end
 
   private
