@@ -1,3 +1,6 @@
+p  = link_to "Log Out", destroy_user_session_path, method: :delete if signed_in?
+p  = link_to "Log In", new_user_session_path if !signed_in?
+
 - @questions.each do |question|
   p
     | Вопрос: 
@@ -5,3 +8,4 @@
     = link_to 'Show question', question
 
 p= link_to 'Ask question', new_question_path
+p= link_to 'My questions', new_question_path if signed_in?
