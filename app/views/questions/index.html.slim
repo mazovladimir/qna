@@ -6,6 +6,7 @@ p  = link_to "Log In", new_user_session_path if !signed_in?
     | Вопрос: 
     = question.title
     = link_to 'Show question', question
+    = link_to 'Delete question', [question], method: :delete if user_signed_in? && (question.user_id == current_user.id)
 
 p= link_to 'Ask question', new_question_path
 p= link_to 'My questions', new_question_path if signed_in?
