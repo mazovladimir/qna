@@ -12,9 +12,9 @@ p  Тело вопроса:
 |  #{@question.body}
 
 p Все комментарии:
-- @question.answers.each do |comment|
-   p #{comment.body} 
-   = link_to 'Delete comment', question_answer_path(@question, comment), method: :delete if user_signed_in? && (comment.user_id == current_user.id)
+- @question.answers.each do |answer|
+   p #{answer.body} 
+   = link_to 'Delete comment', question_answer_path(@question, :answer_id), method: :delete if user_signed_in? && (answer.user_id == current_user.id)
 
 = form_for ([@question, Answer.new ]) do |f|
   p Комментарий:
