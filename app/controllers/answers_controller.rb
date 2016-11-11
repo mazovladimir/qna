@@ -6,10 +6,6 @@ class AnswersController < ApplicationController
     @answer = Answer.new
   end
 
-  def show
-    @answer = Answer.find(params[:id])
-  end
-
   def create
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
@@ -24,7 +20,7 @@ class AnswersController < ApplicationController
   def destroy
     @answer = @question.answers.find(params[:id])
 
-    @answer.destroy
+    @answer.destroy if current_user.author_of?(@answer)
     redirect_to @question
   end
 

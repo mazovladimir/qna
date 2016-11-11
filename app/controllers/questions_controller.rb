@@ -1,5 +1,5 @@
 class QuestionsController < ApplicationController
-  before_action :authenticate_user!, except: [ :index, :show ]
+  before_action :authenticate_user!, except: [ :index, :show, :destroy ]
   before_action :set_question, only: [ :show, :edit, :destroy ]
 
   def index
@@ -11,9 +11,6 @@ class QuestionsController < ApplicationController
 
   def new
     @question = Question.new
-  end
-
-  def edit
   end
 
   def create
@@ -28,7 +25,7 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    @question.destroy if current_user.author_of?(question)
+    @question.destroy if current_user.author_of?(@question)
     redirect_to questions_path
   end
 
