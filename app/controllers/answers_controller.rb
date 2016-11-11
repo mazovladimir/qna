@@ -1,5 +1,5 @@
 class AnswersController < ApplicationController
-  before_action :authenticate_user!, only: [ :new, :create ]
+  before_action :authenticate_user!, only: [ :new, :create, :destroy ]
   before_action :set_question, only: [ :new, :create, :show, :destroy ]
   
   def new
@@ -24,9 +24,8 @@ class AnswersController < ApplicationController
   def destroy
     @answer = @question.answers.find(params[:id])
 
-    if @answer.destroy
-       redirect_to questions_path
-    end
+    @answer.destroy
+    redirect_to @question
   end
 
   private

@@ -4,7 +4,7 @@ RSpec.describe QuestionsController, type: :controller do
   let(:user) { create(:user) }
   let(:question) { create(:question, title: 'more than 10 symbols', user: user) }
   describe 'GET #index' do
-    let!(:questions) { create_list(:question, 2, title: 'more than 10 symbols', user: user) }
+    let(:questions) { create_list(:question, 2, title: 'more than 10 symbols', user: user) }
 
     before { get :index }
 
@@ -85,6 +85,21 @@ RSpec.describe QuestionsController, type: :controller do
         post :create, params: { question: attributes_for(:invalid_question) }
         expect(response).to render_template :new
       end
+    end
+  end
+
+  describe 'DELETE #destroy' do
+    sign_in_user
+
+    before { question }
+
+    it 'deletes question' do
+      expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)
+    end
+
+    it 'redirect to index view' do
+      delete :destroy, params: { id: question }
+      expect(response).to redirect_to questions_path
     end
   end
 end
