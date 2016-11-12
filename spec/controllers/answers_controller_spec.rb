@@ -2,20 +2,10 @@ require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
   let(:user) { create :user }
+  let(:user2) { create :user, email: 'vovka@test.com' }
   let(:myquestion) { create(:question, title: 'more than 10 symbols', user: user) }
   let(:answer) { create(:answer, body: 'more than 10 symbols', user: user  ) }
-  describe 'GET #show' do
-    before { get :show, params: { id: answer, question_id: myquestion } }
-
-    it 'assigns the requested answer to @answer' do
-      expect(assigns(:answer)).to eq answer
-    end
-
-    it 'renders show view' do
-      expect(response).to render_template :show
-    end
-  end
-
+  let(:answer2) { create(:answer, body: 'more than 10 symbols', user: user2  ) }
   describe 'GET #new' do
     sign_in_user
 
@@ -64,15 +54,29 @@ RSpec.describe AnswersController, type: :controller do
   describe 'DELETE #destroy' do
     sign_in_user
 
-    before { myquestion.answers << answer }
+    context 'author deletes question' do
+      before { myquestion.answers << answer }
+      it 'deletes question' do
+        expect { delete :destroy, params: { id: answer, question_id: myquestion } }.to change(myquestion.answers, :count).by(-1)
+      end
 
-    it 'deletes question' do
-      expect { delete :destroy, params: { id: answer, question_id: myquestion } }.to change(myquestion.answers, :count).by(-1)
+      it 'redirect to show view question' do
+        delete :destroy, params: { id: answer, question_id: myquestion }
+        expect(response).to redirect_to question_path(assigns(:question))
+      end
     end
 
-    it 'redirect to show view question' do
-      delete :destroy, params: { id: answer, question_id: myquestion }
-      expect(response).to redirect_to question_path(assigns(:question))
+    context 'non-author deletes question' do
+      before { answer2 }
+      before { myquestion.answers << answer2 }
+      it 'deletes question' do
+        expect { delete :destroy, params: { id: answer2, question_id: myquestion } }.to_not change(myquestion.answers, :count)
+      end
+
+      it 'redirect to show view question' do
+        delete :destroy, params: { id: answer2, question_id: myquestion }
+        expect(response).to redirect_to question_path(assigns(:question))
+      end
     end
   end
 end

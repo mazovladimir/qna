@@ -1,6 +1,6 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, only: [ :new, :create, :destroy ]
-  before_action :set_question, only: [ :new, :create, :show, :destroy ]
+  before_action :set_question, only: [ :new, :create, :destroy ]
   
   def new
     @answer = Answer.new
