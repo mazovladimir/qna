@@ -9,16 +9,8 @@ FactoryGirl.define do
     body nil
   end
 
-  sequence :title do |n|
-    "mynewtitle#{n}"
-  end
-
-  sequence :body do |n|
-    "mynewbodygood#{n}"
-  end
-
   factory :myquestions, class: "Question" do
-    title
-    body 
+    sequence(:title, 5) { |n| "mynewtitle#{n}" }
+    sequence(:body, 5) { |n| "mynewbodygood#{n}" }
   end
 end

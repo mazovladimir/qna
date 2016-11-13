@@ -54,7 +54,7 @@ RSpec.describe AnswersController, type: :controller do
   describe 'DELETE #destroy' do
     sign_in_user
 
-    context 'author deletes question' do
+    context 'author deletes answer' do
       before { answer }
       before { myquestion.answers << answer }
       it 'deletes question' do
@@ -67,11 +67,11 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
 
-    context 'non-author deletes question' do
+    context 'non-author deletes answer' do
       before { answer2 }
       before { myquestion.answers << answer2 }
       it 'deletes question' do
-        expect { delete :destroy, params: { id: answer2, question_id: myquestion } }.to_not change(myquestion.answers, :count)
+        expect { delete :destroy, params: { id: answer2, question_id: myquestion } }.to_not change(Answer, :count)
       end
 
       it 'redirect to show view question' do
