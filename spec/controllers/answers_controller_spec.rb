@@ -55,6 +55,7 @@ RSpec.describe AnswersController, type: :controller do
     sign_in_user
 
     context 'author deletes question' do
+      before { answer }
       before { myquestion.answers << answer }
       it 'deletes question' do
         expect { delete :destroy, params: { id: answer, question_id: myquestion } }.to change(myquestion.answers, :count).by(-1)
