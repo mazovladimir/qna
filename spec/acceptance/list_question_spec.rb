@@ -16,10 +16,10 @@ feature 'List my questions', %q{
 
     visit questions_path
 
+    expect(page).to have_content 'mynewtitle1'
+    expect(page).to have_content 'mynewtitle2'
+    expect(page).to have_content 'mynewtitle3'
+    expect(page).to have_content 'mynewtitle4'
     expect(page).to have_content 'mynewtitle5'
-    expect(page).to have_content 'mynewtitle6'
-    expect(page).to have_content 'mynewtitle7'
-    expect(page).to have_content 'mynewtitle8'
-    expect(page).to have_content 'mynewtitle9'
   end
 end

@@ -10,7 +10,7 @@ FactoryGirl.define do
   end
 
   factory :myquestions, class: "Question" do
-    sequence(:title, 5) { |n| "mynewtitle#{n}" }
-    sequence(:body, 5) { |n| "mynewbodygood#{n}" }
+    sequence(:title, 1) { |n| "mynewtitle#{n}" }
+    sequence(:body, 1) { |n| "mynewbodygood#{n}" }
   end
 end

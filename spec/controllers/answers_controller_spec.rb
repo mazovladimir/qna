@@ -25,7 +25,7 @@ RSpec.describe AnswersController, type: :controller do
 
     context 'with valid attributes' do
       it 'saves the new answer in the database' do
-         expect { post :create, params: { answer: attributes_for(:answer), question_id: myquestion } }.to change(myquestion.answers, :count).by(1)
+         expect { post :create, params: { answer: attributes_for(:answer), question_id: myquestion } }.to change(Answer, :count).by(1)
       end
 
       it 'redirects to show view' do
@@ -58,7 +58,7 @@ RSpec.describe AnswersController, type: :controller do
       before { answer }
       before { myquestion.answers << answer }
       it 'deletes question' do
-        expect { delete :destroy, params: { id: answer, question_id: myquestion } }.to change(myquestion.answers, :count).by(-1)
+        expect { delete :destroy, params: { id: answer, question_id: myquestion } }.to change(Answer, :count).by(-1)
       end
 
       it 'redirect to show view question' do
