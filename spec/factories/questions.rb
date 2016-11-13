@@ -9,13 +9,16 @@ FactoryGirl.define do
     body nil
   end
 
-  sequence :question_list do |n|
-    "user#{n}@test.com"
+  sequence :title do |n|
+    "mynewtitle#{n}"
   end
 
-  factory :question_list do
-    email
-    password '12345678'
-    password_confirmation '12345678'
+  sequence :body do |n|
+    "mynewbodygood#{n}"
+  end
+
+  factory :myquestions, class: "Question" do
+    title
+    body 
   end
 end

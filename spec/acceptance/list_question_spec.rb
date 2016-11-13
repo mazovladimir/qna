@@ -7,15 +7,15 @@ feature 'List my questions', %q{
 } do
 
   given(:user) { create(:user) }
+  let (:myquestions) { create_list(:myquestions, 5, user: user) }
   
   scenario 'Authenticated user list question' do
     sign_in(user)
 
-    create_question
+    myquestions
 
     visit questions_path
 
-    expect(page).to have_content 'Test question'
+    expect(page).to have_content 'mynewtitle'
   end
-
 end
