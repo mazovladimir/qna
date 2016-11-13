@@ -11,11 +11,8 @@ feature 'List my questions', %q{
   
   scenario 'Authenticated user list question' do
     sign_in(user)
-
     myquestions
-
     visit questions_path
-
     expect(page).to have_content 'mynewtitle1'
     expect(page).to have_content 'mynewtitle2'
     expect(page).to have_content 'mynewtitle3'
