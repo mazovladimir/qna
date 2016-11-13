@@ -80,9 +80,9 @@ RSpec.describe QuestionsController, type: :controller do
     sign_in_user
 
     context 'author deletes question' do
-    before { question }
+      before { question }
       it 'deletes question' do
-        expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)
+        expect { delete :destroy, params: { id: question } if subject.current_user.author_of?(question: attributes_for(:question)) }.to change(Question, :count).by(-1)
       end
 
       it 'redirect to index view' do
