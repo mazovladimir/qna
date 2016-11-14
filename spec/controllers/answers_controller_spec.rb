@@ -4,7 +4,7 @@ RSpec.describe AnswersController, type: :controller do
   let(:user) { create :user }
   let(:user2) { create :user, email: 'vovka@test.com' }
   let(:myquestion) { create(:question, title: 'more than 10 symbols', user: user) }
-  let(:answer) { create(:answer, body: 'more than 10 symbols', user: user  ) }
+  let!(:answer) { create(:answer, body: 'more than 10 symbols', user: user  ) }
   let(:answer2) { create(:answer, body: 'more than 10 symbols', user: user2  ) }
   describe 'GET #new' do
     sign_in_user
@@ -54,9 +54,13 @@ RSpec.describe AnswersController, type: :controller do
   describe 'DELETE #destroy' do
     sign_in_user
 
+    before do
+      answer.update(user: @user)
+      answer2
+      myquestion.answers << answer2
+    end
+
     context 'author deletes answer' do
-      before { answer }
-      before { myquestion.answers << answer }
       it 'deletes question' do
         expect { delete :destroy, params: { id: answer, question_id: myquestion } }.to change(Answer, :count).by(-1)
       end
@@ -68,8 +72,6 @@ RSpec.describe AnswersController, type: :controller do
     end
 
     context 'non-author deletes answer' do
-      before { answer2 }
-      before { myquestion.answers << answer2 }
       it 'deletes question' do
         expect { delete :destroy, params: { id: answer2, question_id: myquestion } }.to_not change(Answer, :count)
       end
