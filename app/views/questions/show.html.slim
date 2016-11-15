@@ -17,7 +17,7 @@ p Все комментарии:
 
 = form_for [@question, Answer.new], remote: true do |f|
   p Комментарий:
-  |  = #{f.label :body}
+  |  = #{f.label :body, 'Body'}
   |  = #{f.text_area :body}
 
 
