@@ -30,22 +30,22 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'redirects to show view' do
         post :create, params: { answer: attributes_for(:answer), question_id: myquestion, format: :js }
-        expect(response).to redirect_to question_path(assigns(:question))
+        expect(response).to render_template :create
       end
       
       it 'check user-answer association' do
-        post :create, params: { answer: attributes_for(:answer), question_id: myquestion }
+        post :create, params: { answer: attributes_for(:answer), question_id: myquestion, format: :js }
         expect(assigns(:answer).user).to eq(subject.current_user)
       end
     end
 
     context 'with invalid attributes' do
       it 'doesnt save the new answer' do
-        expect { post :create, params: { answer: attributes_for(:invalid_answer), question_id: myquestion } }.to_not change(Answer, :count)
+        expect { post :create, params: { answer: attributes_for(:invalid_answer), question_id: myquestion, format: :js } }.to_not change(Answer, :count)
       end
 
       it 're-renders new view' do
-        post :create, params: { answer: attributes_for(:invalid_answer), question_id: myquestion }
+        post :create, params: { answer: attributes_for(:invalid_answer), question_id: myquestion, format: :js }
         expect(response).to render_template 'questions/show'
       end
     end

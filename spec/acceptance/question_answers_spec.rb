@@ -11,14 +11,18 @@ feature 'Comment for the question', %q{
   scenario 'Authenticated user wants to show answer for the question', js: true do
     sign_in(user)
     create_question
-    visit questions_path(question)
+    visit questions_path
     click_on 'Show question'
     fill_in 'Body', with: 'This is my answer'
     click_on 'Comment'
-    expect(page).to have_content 'This is my answer'    
+    expect(current_path).to eq question_path(question)
+    within '.answers' do
+      expect(page).to have_content 'This is my answer'
+    end
+    #expect(page).to have_content 'This is my answer'    
   end
 
-  scenario 'Authenticated user tries to fill the body with empty' do
+  scenario 'Authenticated user tries to fill the body with empty, js: true' do
     sign_in(user)
     create_question
     visit questions_path
