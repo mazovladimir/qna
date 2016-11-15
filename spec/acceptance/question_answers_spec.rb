@@ -7,12 +7,11 @@ feature 'Comment for the question', %q{
 } do
 
   let(:user) { create(:user) }
+  let(:question) { create(:question, user: user) }
 
   scenario 'Authenticated user wants to show answer for the question', js: true do
     sign_in(user)
-    create_question
-    visit questions_path
-    click_on 'Show question'
+    visit questions_path(question)
     fill_in 'Body', with: 'This is my answer'
     click_on 'Comment'
     expect(current_path).to eq question_path(question)
