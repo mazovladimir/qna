@@ -8,10 +8,10 @@ feature 'Comment for the question', %q{
 
   let(:user) { create(:user) }
 
-  scenario 'Authenticated user wants to show answer for the question' do
+  scenario 'Authenticated user wants to show answer for the question', js: true do
     sign_in(user)
     create_question
-    visit questions_path
+    visit questions_path(question)
     click_on 'Show question'
     fill_in 'Body', with: 'This is my answer'
     click_on 'Comment'
@@ -29,7 +29,7 @@ feature 'Comment for the question', %q{
     expect(page).to have_content 'Body can\'t be blank'
   end
 
-  scenario 'Unregisterd user tries to answer the question' do
+  scenario 'Unregisterd user tries to answer the question, js: true' do
     sign_in(user)
     create_question
     visit new_question_path

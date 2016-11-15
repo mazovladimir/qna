@@ -11,7 +11,7 @@ class AnswersController < ApplicationController
     @answer.user = current_user
 
     if @answer.save
-      redirect_to @question
+      #redirect_to @question
     else
       render 'questions/show'
     end
