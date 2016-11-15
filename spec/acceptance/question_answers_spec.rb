@@ -19,10 +19,9 @@ feature 'Comment for the question', %q{
     within '.answers' do
       expect(page).to have_content 'This is my answer'
     end
-    #expect(page).to have_content 'This is my answer'    
   end
 
-  scenario 'Authenticated user tries to fill the body with empty, js: true' do
+  scenario 'Authenticated user tries to fill the body with empty' do
     sign_in(user)
     create_question
     visit questions_path
@@ -33,7 +32,7 @@ feature 'Comment for the question', %q{
     expect(page).to have_content 'Body can\'t be blank'
   end
 
-  scenario 'Unregisterd user tries to answer the question, js: true' do
+  scenario 'Unregisterd user tries to answer the question' do
     sign_in(user)
     create_question
     visit new_question_path
