@@ -16,7 +16,7 @@ feature 'Comment for the question', %q{
     fill_in 'Body', with: 'This is my answer'
     click_on 'Comment'
     expect(current_path).to eq question_path(question)
-    within '.answers' do
+    within ('.answers') do
       expect(page).to have_content 'This is my answer'
     end
   end
