@@ -15,8 +15,8 @@ p Все комментарии:
 .answers
 - @question.answers.each do |answer|
     - if answer.persisted?
-      = render 'answers/answer', answer: answer
       .answer
+      = render 'answers/answer', answer: answer
 
 = form_for [@question, Answer.new], remote: true do |f|
   p Комментарий:
