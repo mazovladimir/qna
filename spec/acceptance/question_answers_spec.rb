@@ -21,14 +21,14 @@ feature 'Comment for the question', %q{
     end
   end
 
-  scenario 'Authenticated user tries to fill the body with empty' do
+  scenario 'Authenticated user tries to fill the body with empty', js: true do
     sign_in(user)
     visit questions_path(question)
     expect(page).to have_content 'More than 10 symbols'
     click_on 'Show question'
     fill_in 'Body', with: ''
     click_on 'Comment'
-    expect(page).to have_content 'Body can\'t be blank'
+    expect(page).to have_content 'Body is too short (minimum is 10 characters)'
   end
 
   scenario 'Unregisterd user tries to answer the question' do
