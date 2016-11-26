@@ -1,7 +1,7 @@
-p  Вопрос: 
+p  Заголовок: 
 |  #{@question.title}
 
-p  Тело вопроса:
+p  Вопрос:
 |  #{@question.body}
 
 p Все комментарии:
@@ -11,10 +11,9 @@ p Все комментарии:
       = render 'answers/answer', answer: answer
 
 = form_for [@question, Answer.new], remote: true do |f|
-  p Комментарий:
   .answer-errors  
-  |  = #{f.label :body, 'Body'}
-  |  = #{f.text_area :body}
+  p = f.label :body, 'Мой комментарий'
+  p = f.text_area :body
 
 
   = f.submit 'Comment'

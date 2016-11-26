@@ -15,19 +15,31 @@ feature 'Answer editing', %q{
     expect(page).to_not have_link 'Edit'
   end
 
-  scenario 'Authenticated user sees link to Edit', js: true do
-    sign_in(user)
-    visit question_path(question)
-    fill_in 'Body', with: 'This is my answer'
-    click_on 'Comment'
-    expect(current_path).to eq question_path(question)
-    within '.answers' do
-      expect(page).to have_link 'Edit' 
+  describe 'Authenticated user' do
+    before do
+      sign_in(user)
+      visit question_path(question)
     end
+
+    scenario 'sees link to Edit', js: true do
+      fill_in 'Body', with: 'This is my answer'
+      click_on 'Comment'
+      expect(current_path).to eq question_path(question)
+      within '.answers' do
+        expect(page).to have_link 'Edit' 
+      end
+    end
+
+    scenario 'tries to edit his answer', js: true do
+        click_on 'Edit'
+      within '.answers' do
+        fill_in 'Body', with: 'Edit my answer'
+      end
+      expect(page).to_not have_content answer.body
+      expect(page).to have_content 'Edit my answer'
+      expect(page).to_not have_selector 'textarea'
+    end
+
+    scenario 'tries to edit answer of another person' 
   end
-
-  scenario 'Authenticated user tries to edit answer'
-  scenario 'Authenticated user tries to edit answer of another person'
-
-
 end
