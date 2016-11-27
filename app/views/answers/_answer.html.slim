@@ -1,4 +1,4 @@
-= div_for @answer, id: 'answer_answer.id' do
+= div_for(answer)  do
 p #{answer.body}
 
 p= link_to 'Delete comment', question_answer_path(@question, answer), method: :delete if user_signed_in? && current_user.author_of?(answer)
