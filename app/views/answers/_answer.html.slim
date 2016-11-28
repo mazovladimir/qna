@@ -1,11 +1,11 @@
 = div_for(answer)  do
-p #{answer.body}
+  p #{answer.body}
 
-p= link_to 'Delete comment', question_answer_path(@question, answer), method: :delete if user_signed_in? && current_user.author_of?(answer)
-- if user_signed_in? && current_user.author_of?(answer)
-  p= link_to 'Edit', '', class: '.edit-answer-link', data: { answer_id: answer.id }
-  p
-  = form_for [@question, answer], remote: true, html: {id: "edit-answer-#{answer.id}"}  do |f|
-    p= f.label :body, "Редактирование"
-    p= f.text_area :body, id: 'edit-body'
-    = f.submit 'Save'
+  p= link_to 'Delete comment', question_answer_path(@question, answer), method: :delete if user_signed_in? && current_user.author_of?(answer)
+  - if user_signed_in? && current_user.author_of?(answer)
+    p= link_to 'Edit', '', class: '.edit-answer-link', data: { answer_id: answer.id }
+    p
+    = form_for [@question, answer], remote: true, html: {id: "edit-answer-#{answer.id}"}  do |f|
+      p= f.label :body, "Редактирование"
+      p= f.text_area :body, id: 'edit-body'
+      = f.submit 'Save'
