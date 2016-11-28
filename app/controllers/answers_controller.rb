@@ -1,6 +1,6 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, only: [ :new, :create, :destroy ]
-  before_action :set_question, only: [ :new, :create, :destroy ]
+  before_action :set_question, only: [ :new, :create, :destroy, :show ]
   
   def new
     @answer = Answer.new
@@ -10,6 +10,9 @@ class AnswersController < ApplicationController
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
     @answer.save
+  end
+
+  def show
   end
 
   def update
