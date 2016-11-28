@@ -5,11 +5,10 @@ p  Вопрос:
 |  #{@question.body}
 
 p Все комментарии:
-.answer
 - @question.answers.each do |answer|
     - if answer.persisted?
       = render 'answers/answer', answer: answer
-
+#answer
 = form_for [@question, Answer.new], remote: true  do |f|
   .answer-errors  
   p = f.label :body, 'Мой комментарий'
