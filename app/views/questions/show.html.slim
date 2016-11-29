@@ -6,13 +6,13 @@ p  Вопрос:
 
 p Все комментарии:
 - @question.answers.each do |answer|
-    - if answer.persisted?
-      = render 'answers/answer', answer: answer
+  - if answer.persisted?
+    = render 'answers/answer', answer: answer
 #answer
 = form_for [@question, Answer.new], remote: true  do |f|
   .answer-errors  
-  p = f.label :body, 'Мой комментарий'
-  p = f.text_area :body
+  p= f.label :body, 'Мой комментарий'
+  p= f.text_area :body
 
 
   = f.submit 'Comment'
