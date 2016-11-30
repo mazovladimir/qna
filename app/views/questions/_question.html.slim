@@ -1,1 +1,19 @@
 = render 'common/errors', resource: @question
+
+= div_for(question)  do
+  p
+  b Заголовок:
+  p #{question.title}
+  p 
+  b Вопрос:
+  p #{question.body}
+
+  p= link_to 'Delete question', question, remote: true, method: :delete if user_signed_in? && current_user.author_of?(question)
+  - if user_signed_in? && current_user.author_of?(question)
+    p= link_to 'Show question', question
+    p= link_to 'Edit', '', class: 'edit-question-link', data: { question_id: question.id }
+    p
+      = form_for question, remote: true, html: {id: "edit-question-#{question.id}"}  do |f|
+        p= f.label :body, "Редактирование"
+        p= f.text_area :body
+        = f.submit 'Save'
