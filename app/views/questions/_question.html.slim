@@ -1,5 +1,3 @@
-= render 'common/errors', resource: @question
-
 = div_for(question)  do
   p
   b Заголовок:
@@ -14,6 +12,7 @@
     p= link_to 'Edit', '', class: 'edit-question-link', data: { question_id: question.id }
     p
       = form_for question, remote: true, html: {id: "edit-question-#{question.id}"}  do |f|
+        .question-errors
         p= f.label :body, "Редактирование"
         p= f.text_area :body
         = f.submit 'Save'

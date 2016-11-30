@@ -1,6 +1,6 @@
 <% if @question.errors.present? %>
   <% @question.errors.full_messages.each do |message| %>
-    $('.edit-errors').html('<%= j message %>');
+    $('.question-errors').html('<%= j message %>');
   <% end %>
 <% else %>
   $('#question_' + <%= @question.id %>).html('<%= j render @question %>');
