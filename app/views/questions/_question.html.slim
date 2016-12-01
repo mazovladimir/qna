@@ -6,10 +6,10 @@
   b Вопрос:
   p #{question.body}
 
-  p= link_to 'Delete question', question, remote: true, method: :delete if user_signed_in? && current_user.author_of?(question)
+  = link_to 'Show question', question
   - if user_signed_in? && current_user.author_of?(question)
-    p= link_to 'Show question', question
-    p= link_to 'Edit', '', class: 'edit-question-link', data: { question_id: question.id }
+    = link_to 'Edit Question', '', class: 'edit-question-link', data: { question_id: question.id } 
+    = link_to 'Delete question', question, remote: true, method: :delete
     p
       = form_for question, remote: true, html: {id: "edit-question-#{question.id}"}  do |f|
         .question-errors

@@ -27,6 +27,11 @@ class AnswersController < ApplicationController
     @answer.destroy if current_user.author_of?(@answer)
   end
 
+  def set_best
+    @answer = Answer.find(params[:id])
+    @answer.best_answer
+  end
+
   private
   def set_question
     @question = Question.find(params[:question_id])
