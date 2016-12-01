@@ -6,8 +6,8 @@ class Answer < ActiveRecord::Base
 
   def best_answer
     self.update(best: 1)
-    Answer.all.each do |myanswer|
-      myanswer.update(best: 0) if myanswer.id != self.id
+    Answer.where(question_id: self.question_id).each do |myanswer|
+      myanswer.update(best: 0) if (myanswer.id != self.id)
     end
   end
 end
