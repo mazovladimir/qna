@@ -30,6 +30,7 @@ class AnswersController < ApplicationController
   def set_best
     @answer = Answer.find(params[:id])
     @answer.best_answer if current_user.author_of?(@question)
+    @answers = @answer.question.answers.order(best: :desc)
   end
 
   private

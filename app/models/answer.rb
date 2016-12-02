@@ -5,9 +5,7 @@ class Answer < ActiveRecord::Base
   validates :body, presence: true, length: { minimum: 10 }
 
   def best_answer
-    self.update(best: 1)
-    Answer.where(question_id: self.question_id).each do |myanswer|
-      myanswer.update(best: 0) if (myanswer.id != self.id)
-    end
+    question.answers.where(question_id: self.question_id).update_all(best: false)
+    self.update!(best: true)
   end
 end
