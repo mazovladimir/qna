@@ -6,7 +6,7 @@ p  Вопрос:
 
 p Все комментарии:
 .answers
-= render @question.answers
+  = render @question.answers
 
 = form_for [@question, Answer.new], remote: true  do |f|
   .answer-errors  
