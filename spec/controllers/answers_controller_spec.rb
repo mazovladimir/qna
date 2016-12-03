@@ -4,7 +4,7 @@ RSpec.describe AnswersController, type: :controller do
   let(:user) { create :user }
   let(:user2) { create :user, email: 'vovka@test.com' }
   let(:myquestion) { create(:question, title: 'more than 10 symbols', user: user) }
-  let!(:answer) { create(:answer, body: 'more than 10 symbols', user: user  ) }
+  let!(:answer) { create(:answer, body: 'more than 10 symbols', user: user, question: myquestion  ) }
   let(:answer2) { create(:answer, body: 'more than 10 symbols', user: user2  ) }
   describe 'GET #new' do
     sign_in_user
@@ -80,6 +80,31 @@ RSpec.describe AnswersController, type: :controller do
         delete :destroy, params: { id: answer2, question_id: myquestion, format: :js }
         expect(response).to render_template 'answers/destroy'
       end
+    end
+  end
+
+  describe 'PATCH #update' do
+    sign_in_user
+
+    it 'assings the requested answer to @answer' do
+      patch :update, params: { id: answer, question_id: myquestion, answer: attributes_for(:answer), format: :js }
+      expect(assigns(:answer)).to eq answer
+    end
+
+    it 'assigns the question' do
+      patch :update, params: { id: answer, question_id: myquestion, answer: attributes_for(:answer), format: :js }
+      expect(assigns(:question)).to eq myquestion
+    end
+
+    it 'changes answer attributes' do
+      patch :update, params: { id: answer, question_id: myquestion, format: :js }
+      answer.reload
+      expect(answer.body).to eq 'more than 10 symbols'
+    end
+
+    it 'render update template' do
+      patch :update, params: { id: answer, question_id: myquestion, answer: attributes_for(:answer), format: :js }
+      expect(response).to render_template :update
     end
   end
 end
