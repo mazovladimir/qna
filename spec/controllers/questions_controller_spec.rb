@@ -106,4 +106,41 @@ RSpec.describe QuestionsController, type: :controller do
       end
     end  
   end
+
+  describe 'PATCH #update' do
+    sign_in_user
+    
+    context 'valid attributes' do
+      it 'assings the requested question to @question' do
+        patch :update, params: { id: question, question: attributes_for(:question) }, format: :js
+        expect(assigns(:question)).to eq question
+      end
+
+      it 'changes question attributes' do
+        patch :update, params: { id: question }, format: :js
+        question.reload
+        expect(question.title).to eq 'more than 10 symbols'
+        expect(question.body).to eq 'More than 10 symbols'
+      end
+
+      it 'redirects to the updated question' do
+        patch :update, params: { id: question, question: attributes_for(:question) }, format: :js
+        expect(response).to render_template :update
+      end
+    end
+
+    context 'invalid attributes' do
+      before { patch :update, params: { id: question, question: attributes_for(:invalid_question) }, format: :js }
+
+      it 'does not change question attributes' do
+        question.reload
+        expect(question.title).to eq 'more than 10 symbols'
+        expect(question.body).to eq 'More than 10 symbols'
+      end
+
+      it 're-renders edit view' do
+        expect(response).to render_template :update
+      end
+    end
+  end
 end
