@@ -23,7 +23,6 @@ ActiveRecord::Schema.define(version: 20161130164748) do
     t.integer  "user_id"
     t.boolean  "best",        default: false
     t.index ["question_id"], name: "index_answers_on_question_id", using: :btree
-    t.index ["user_id"], name: "index_answers_on_user_id", using: :btree
   end
 
   create_table "questions", force: :cascade do |t|
@@ -32,7 +31,6 @@ ActiveRecord::Schema.define(version: 20161130164748) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "user_id"
-    t.index ["user_id"], name: "index_questions_on_user_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
@@ -53,6 +51,4 @@ ActiveRecord::Schema.define(version: 20161130164748) do
   end
 
   add_foreign_key "answers", "questions"
-  add_foreign_key "answers", "users"
-  add_foreign_key "questions", "users"
 end
