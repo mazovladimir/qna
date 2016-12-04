@@ -6,12 +6,12 @@ feature 'Delete answer', %q{
   I want to be able to have ability to delete
 } do
 
-  let!(:user) { create(:user) }
-  let!(:user2) { create(:user, email: 'vovka@test.com') }
+  let(:user) { create(:user) }
+  let(:user2) { create(:user, email: 'vovka@test.com') }
   let!(:question) { create(:question, user: user) }
   let!(:answer) { create(:answer, question: question, user: user) }
 
-  scenario 'Authenticated user deletes answer' do
+  scenario 'Authenticated user deletes answer', js: true do
     sign_in(user)
     visit questions_path
     click_on 'Show question'
@@ -19,15 +19,16 @@ feature 'Delete answer', %q{
     expect(page).to_not have_content 'lot More than 10 symbols'
   end
 
-  scenario 'Non-Author Authenticated user deletes answer' do
+  scenario 'Non-Author Authenticated user deletes answer', js: true do
     sign_in(user2)
     visit questions_path
     click_on 'Show question'
     expect(page).to_not have_content 'Delete comment'
   end
 
-  scenario 'Non-Authenticated user deletes answer' do
-    visit questions_path
+  scenario 'Non-Authenticated user deletes answer'  do
+    controller.stub(:current_user) { user }
+    visit questions_path(question)
     click_on 'Show question'
     expect(page).to_not have_content 'Delete comment'
   end

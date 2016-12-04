@@ -11,9 +11,9 @@ feature 'Comment for the question', %q{
 
   scenario 'Authenticated user wants to show answer for the question', js: true do
     sign_in(user)
-    visit questions_path(question)
+    visit questions_path
     click_on 'Show question'
-    fill_in 'Body', with: 'This is my answer'
+    fill_in 'answer_body', with: 'This is my answer'
     click_on 'Comment'
     expect(current_path).to eq question_path(question)
     within ('.answers') do
@@ -26,7 +26,7 @@ feature 'Comment for the question', %q{
     visit questions_path(question)
     expect(page).to have_content 'More than 10 symbols'
     click_on 'Show question'
-    fill_in 'Body', with: ''
+    fill_in 'answer_body', with: ''
     click_on 'Comment'
     expect(page).to have_content 'Body is too short (minimum is 10 characters)'
   end
@@ -37,7 +37,7 @@ feature 'Comment for the question', %q{
     click_on 'Log Out'
     visit questions_path
     click_on 'Show question'
-    fill_in 'Body', with: 'My new comment'
+    fill_in 'answer_body', with: 'My new comment'
     click_on 'Comment'
     expect(page).to have_content 'You need to sign in or sign up before continuing'
   end

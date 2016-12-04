@@ -3,17 +3,19 @@ require_relative 'acceptance_helper'
 feature 'Answer editing', %q{
   In order to fix mistake
   As an author of answer
-  I want to be able to edit my answer
+  I'd like ot be able to edit my answer
 } do
 
   let(:user) { create(:user) }
   let!(:question) { create(:question, user: user) }
-  let(:answer) { create(:answer, question: question, user: user) }
+  let!(:answer) { create(:answer, question: question, user: user) }
 
-  scenario 'Unauthenticated user tries to edit question' do
-    visit question_path(question)
-    expect(page).to_not have_link 'Edit'
+  scenario 'Unauthenticated user try to edit question' do
+    visit questions_path
+    click_on 'Show question'
+    expect(page).to_not have_link 'Edit comment'
   end
+
 
   describe 'Authenticated user' do
     before do
@@ -22,24 +24,21 @@ feature 'Answer editing', %q{
     end
 
     scenario 'sees link to Edit', js: true do
-      fill_in 'Body', with: 'This is my answer'
-      click_on 'Comment'
-      expect(current_path).to eq question_path(question)
       within '.answers' do
-        expect(page).to have_link 'Edit' 
+        expect(page).to have_link 'Edit comment'
       end
     end
 
-    scenario 'tries to edit his answer', js: true do
-        click_on 'Edit'
+    scenario 'try to edit his answer', js: true do
+      click_on 'Edit comment'
       within '.answers' do
-        fill_in 'Body', with: 'Edit my answer'
-      end
-      expect(page).to_not have_content answer.body
-      expect(page).to have_content 'Edit my answer'
-      expect(page).to_not have_selector 'textarea'
-    end
+        fill_in 'edit-body', with: 'edited answer'
+        click_on 'Save'
 
-    scenario 'tries to edit answer of another person' 
+        expect(page).to_not have_content answer.body
+        expect(page).to have_content 'edited answer'
+        expect(page).to_not have_selector 'textarea'
+      end
+    end
   end
 end
