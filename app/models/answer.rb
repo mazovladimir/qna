@@ -5,7 +5,9 @@ class Answer < ActiveRecord::Base
   validates :body, presence: true, length: { minimum: 10 }
 
   def best_answer
-    question.answers(question_id: self.question_id).update_all(best: false)
-    self.update!(best: true)
+    ActiveRecord::Base.transaction do
+      question.answers(question_id: self.question_id).update_all(best: false)
+      self.update!(best: true)
+    end
   end
 end
