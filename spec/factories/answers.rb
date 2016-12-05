@@ -7,4 +7,8 @@ FactoryGirl.define do
   factory :invalid_answer, class: "Answer" do
     body nil
   end
+
+  factory :myanswers, class: "Answer" do
+    sequence(:body, 1) { |n| "mynewbodygood#{n}" }
+  end
 end

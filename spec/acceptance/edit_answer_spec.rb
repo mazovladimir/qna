@@ -9,6 +9,7 @@ feature 'Answer editing', %q{
   let(:user) { create(:user) }
   let!(:question) { create(:question, user: user) }
   let!(:answer) { create(:answer, question: question, user: user) }
+  let!(:myanswers) { create_list(:myanswers, 5, question: question, user: user) }
 
   scenario 'Unauthenticated user try to edit question' do
     visit questions_path
@@ -30,7 +31,7 @@ feature 'Answer editing', %q{
     end
 
     scenario 'try to edit his answer', js: true do
-      click_on 'Edit comment'
+      click_on 'Edit comment', match: :first
       within '.answers' do
         fill_in 'edit-body', with: 'edited answer'
         click_on 'Save'
@@ -39,6 +40,22 @@ feature 'Answer editing', %q{
         expect(page).to have_content 'edited answer'
         expect(page).to_not have_selector 'textarea'
       end
+    end
+
+    scenario 'sets answer as best', js: true do
+      expect(page).to have_content 'mynewbodygood16'
+      expect(page).to have_content 'mynewbodygood17'
+      expect(page).to have_content 'mynewbodygood18'
+      expect(page).to have_content 'mynewbodygood19'
+      expect(page).to have_content 'mynewbodygood20'
+
+      click_on 'Best comment'
+
+      expect(page).to have_content 'mynewbodygood16'
+      expect(page).to have_content 'mynewbodygood17'
+      expect(page).to have_content 'mynewbodygood18'
+      expect(page).to have_content 'mynewbodygood19'
+      expect(page).to have_content 'mynewbodygood20'
     end
   end
 end
