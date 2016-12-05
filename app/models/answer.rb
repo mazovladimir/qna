@@ -6,7 +6,7 @@ class Answer < ActiveRecord::Base
 
   def best_answer
     ActiveRecord::Base.transaction do
-      question.answers(question_id: self.question_id).update_all(best: false)
+      question.answers.update_all(best: false)
       self.update!(best: true)
     end
   end

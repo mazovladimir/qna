@@ -49,13 +49,13 @@ feature 'Answer editing', %q{
       expect(page).to have_content 'mynewbodygood19'
       expect(page).to have_content 'mynewbodygood20'
 
-      all('.best-answer-link')[3].click
+      within '.answer:last-child' do
+        click_on 'Best comment'
+      end
 
-      expect(page).to have_content 'mynewbodygood19'
-      expect(page).to have_content 'mynewbodygood16'
-      expect(page).to have_content 'mynewbodygood17'
-      expect(page).to have_content 'mynewbodygood18'
-      expect(page).to have_content 'mynewbodygood20'
+      within '.answer:first-child' do
+        expect(page).to have_content 'mynewbodygood20'
+      end
     end
   end
 end
