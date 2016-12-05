@@ -28,7 +28,6 @@ feature 'Delete answer', %q{
   end
 
   scenario 'Non-Authenticated user deletes answer'  do
-    controller.stub(:current_user) { user }
     visit questions_path(question)
     click_on 'Show question'
     expect(page).to_not have_content 'Delete comment'
