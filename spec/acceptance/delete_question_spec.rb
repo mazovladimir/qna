@@ -13,6 +13,7 @@ feature 'Delete question', %q{
   scenario 'Authenticated user deletes question', js: true do
     sign_in(user)
     visit questions_path
+    expect(page).to have_content 'More than 10 symbols'
     click_on 'Delete question'
     expect(page).to_not have_content 'More than 10 symbols'
   end

@@ -15,6 +15,7 @@ feature 'Delete answer', %q{
     sign_in(user)
     visit questions_path
     click_on 'Show question'
+    expect(page).to have_content 'lot More than 10 symbols'
     click_on 'Delete comment'
     expect(page).to_not have_content 'lot More than 10 symbols'
   end
@@ -23,7 +24,7 @@ feature 'Delete answer', %q{
     sign_in(user2)
     visit questions_path
     click_on 'Show question'
-    expect(page).to_not have_content 'Delete comment'
+    expect(page).to_not have_link 'Delete comment'
   end
 
   scenario 'Non-Authenticated user deletes answer'  do
