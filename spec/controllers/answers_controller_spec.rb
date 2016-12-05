@@ -106,5 +106,9 @@ RSpec.describe AnswersController, type: :controller do
       patch :update, params: { id: answer, question_id: myquestion, answer: attributes_for(:answer), format: :js }
       expect(response).to render_template :update
     end
+
+    it 'sets answer as best' do
+      patch :set_best, params: { id: answer, question_id: myquestion, answer: attributes_for(:answer), format: :js }
+    end
   end
 end
