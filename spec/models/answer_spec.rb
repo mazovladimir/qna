@@ -13,6 +13,7 @@ RSpec.describe Answer, type: :model do
   it 'should check best answer' do
     answer = myanswers.first
     answer.best_answer
+    answer.best.should == true
     myanswers.each do |myanswer|
       myanswer.best.should == false if !answer
     end
