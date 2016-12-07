@@ -20,6 +20,7 @@ RSpec.describe Answer, type: :model do
 
     lanswer = myanswers.last
     lanswer.best_answer
+    lanswer.best.should == true
     myanswers.each do |myanswer|
       myanswer.best.should == false if !lanswer
     end
