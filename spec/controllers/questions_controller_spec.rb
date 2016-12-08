@@ -142,5 +142,19 @@ RSpec.describe QuestionsController, type: :controller do
         expect(response).to render_template :update
       end
     end
+
+    context 'author updates question' do
+      it 'updates author question' do
+        patch :update, params: { id: question, question: attributes_for(:question) }, format: :js
+        expect(assigns(:question)).to eq question
+      end
+    end
+
+    context 'non-author updates question' do
+      it 'not update non-author question' do
+        patch :update, params: { id: question2, question: attributes_for(:question) }, format: :js
+        expect(assigns(:question)).to_not eq question
+      end
+    end
   end
 end
