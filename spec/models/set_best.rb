@@ -7,10 +7,13 @@ RSpec.describe Answer, type: :model do
 
   it 'should check best answer' do
     answer = myanswers.first
+    lanswer = myanswers.last
+    expect(answer.best).to eq false
+
     answer.update(best: true)
     expect(answer.best).to eq true
+    expect(lanswer.best).to eq false
 
-    lanswer = myanswers.last
     lanswer.best_answer
     expect(answer.best).to eq false
     expect(lanswer.best).to eq true

@@ -96,17 +96,34 @@ RSpec.describe AnswersController, type: :controller do
       expect(assigns(:question)).to eq myquestion
     end
 
-    it 'changes answer attributes' do
-      patch :update, params: { id: answer, question_id: myquestion, format: :js }
-      answer.reload
-      expect(answer.body).to eq 'more than 10 symbols'
+    context 'author updates answer' do
+      it 'changes answer attributes' do
+        patch :update, params: { id: answer, question_id: myquestion, format: :js }
+        answer.reload
+        expect(answer.body).to eq 'more than 10 symbols'
+      end
+
+      it 'render update template' do
+        patch :update, params: { id: answer, question_id: myquestion, answer: attributes_for(:answer), format: :js }
+        expect(response).to render_template :update
+      end
     end
 
-    it 'render update template' do
-      patch :update, params: { id: answer, question_id: myquestion, answer: attributes_for(:answer), format: :js }
-      expect(response).to render_template :update
-    end
+    context 'non-author cant update answer' do
+      it 'changes answer attributes' do
+        patch :update, params: { id: answer2, question_id: myquestion, format: :js }
+        answer.reload
+        expect(answer.body).to eq 'more than 10 symbols'
+      end
 
+      it 'render update template' do
+        patch :update, params: { id: answer2, question_id: myquestion, answer: attributes_for(:answer), format: :js }
+        expect(response).to render_template :update
+      end
+    end
+  end
+
+  describe 'PATCH #set_best' do
     it 'sets answer as best' do
       patch :set_best, params: { id: answer, question_id: myquestion, answer: attributes_for(:answer), format: :js }
     end
