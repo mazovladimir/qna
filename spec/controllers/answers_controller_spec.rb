@@ -124,8 +124,13 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'PATCH #set_best' do
-    it 'sets answer as best' do
-      patch :set_best, params: { id: answer, question_id: myquestion, answer: attributes_for(:answer), format: :js }
+    sign_in_user
+
+    context 'author updates answer' do
+      it 'author sets answer as best' do
+        patch :set_best, params: { id: answer, question_id: myquestion, answer: attributes_for(:answer), format: :js }
+        expect(response).to render_template :set_best
+      end
     end
   end
 end
