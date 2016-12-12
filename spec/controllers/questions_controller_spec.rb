@@ -5,7 +5,6 @@ RSpec.describe QuestionsController, type: :controller do
   let(:user2) { create(:user, email: 'vovka@test.com') }
   let(:question) { create(:question, title: 'more than 10 symbols', user: user) }
   let(:question2) { create(:question, title: 'more than 10 symbols', user: user2) }
-  let(:question3) { create(:question, title: 'more than 10 symbols', user: @user) }
   describe 'GET #index' do
     let(:questions) { create_list(:question, 2, title: 'more than 10 symbols', user: user) }
 
@@ -146,14 +145,14 @@ RSpec.describe QuestionsController, type: :controller do
 
     context 'author updates question' do
       it 'updates author question' do
-        question3
-        expect{patch :update, params: { id: question3, question: attributes_for(:update_question) }, format: :js}.to change(question.reload, :body)
+        question.update(user: @user)
+        expect { patch :update, params: { id: question, question: attributes_for(:update_question) }, format: :js}.to change(question.reload, :body)
       end
     end
 
     context 'non-author updates question' do
       it 'not update non-author question' do
-        expect{patch :update, params: { id: question, question: attributes_for(:update_question) }, format: :js}.to_not change(question.reload, :body)
+        expect { patch :update, params: { id: question, question: attributes_for(:update_question) }, format: :js}.to_not change(question.reload, :body)
       end
     end
   end

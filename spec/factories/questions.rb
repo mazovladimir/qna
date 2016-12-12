@@ -12,7 +12,6 @@ FactoryGirl.define do
   factory :update_question, class: "Question" do
     title 'I update question'
     body 'I update question'
-    user @user
   end
 
   factory :myquestions, class: "Question" do
