@@ -5,6 +5,7 @@ RSpec.describe QuestionsController, type: :controller do
   let(:user2) { create(:user, email: 'vovka@test.com') }
   let(:question) { create(:question, title: 'more than 10 symbols', user: user) }
   let(:question2) { create(:question, title: 'more than 10 symbols', user: user2) }
+  let(:question3) { create(:question, title: 'more than 10 symbols', user: @user) }
   describe 'GET #index' do
     let(:questions) { create_list(:question, 2, title: 'more than 10 symbols', user: user) }
 
@@ -109,7 +110,7 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'PATCH #update' do
     sign_in_user
-    
+
     context 'valid attributes' do
       it 'assings the requested question to @question' do
         patch :update, params: { id: question, question: attributes_for(:question) }, format: :js
@@ -145,15 +146,14 @@ RSpec.describe QuestionsController, type: :controller do
 
     context 'author updates question' do
       it 'updates author question' do
-        patch :update, params: { id: question, question: attributes_for(:question) }, format: :js
-        expect(assigns(:question)).to eq question
+        question3
+        expect{patch :update, params: { id: question3, question: attributes_for(:update_question) }, format: :js}.to change(question.reload, :body)
       end
     end
 
     context 'non-author updates question' do
       it 'not update non-author question' do
-        patch :update, params: { id: question2, question: attributes_for(:question) }, format: :js
-        expect(assigns(:question)).to_not eq question
+        expect{patch :update, params: { id: question, question: attributes_for(:update_question) }, format: :js}.to_not change(question.reload, :body)
       end
     end
   end

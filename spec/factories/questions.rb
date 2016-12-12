@@ -9,6 +9,12 @@ FactoryGirl.define do
     body nil
   end
 
+  factory :update_question, class: "Question" do
+    title 'I update question'
+    body 'I update question'
+    user @user
+  end
+
   factory :myquestions, class: "Question" do
     sequence(:title, 1) { |n| "mynewtitle#{n}" }
     sequence(:body, 1) { |n| "mynewbodygood#{n}" }
