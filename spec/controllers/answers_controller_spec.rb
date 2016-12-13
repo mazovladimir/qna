@@ -99,9 +99,10 @@ RSpec.describe AnswersController, type: :controller do
 
     context 'author updates answer' do
       it 'changes answer attributes' do
-        patch :update, params: { id: answer, question_id: myquestion, format: :js }
+        answer.update(user: @user)
+        patch :update, params: { id: answer, question_id: myquestion, answer: attributes_for(:update_answer), format: :js }
         answer.reload
-        expect(answer.body).to eq 'more than 10 symbols'
+        expect(answer.body).to eq 'I want to update answer'
       end
 
       it 'render update template' do
@@ -112,13 +113,13 @@ RSpec.describe AnswersController, type: :controller do
 
     context 'non-author cant update answer' do
       it 'changes answer attributes' do
-        patch :update, params: { id: answer2, question_id: myquestion, format: :js }
+        patch :update, params: { id: answer, question_id: myquestion, answer: attributes_for(:update_answer), format: :js }
         answer.reload
         expect(answer.body).to eq 'more than 10 symbols'
       end
 
       it 'render update template' do
-        patch :update, params: { id: answer2, question_id: myquestion, answer: attributes_for(:answer), format: :js }
+        patch :update, params: { id: answer, question_id: myquestion, answer: attributes_for(:answer), format: :js }
         expect(response).to render_template :update
       end
     end
@@ -129,14 +130,15 @@ RSpec.describe AnswersController, type: :controller do
 
     context 'author updates answer' do
       it 'author sets answer as best' do
+        answer.question.update(user: @user)
         patch :set_best, params: { id: answer, question_id: myquestion, answer: attributes_for(:answer), format: :js }
         expect(response).to render_template :set_best
       end
     end
 
-    context 'author updates answer' do
+    context 'non-author updates answer' do
       it 'non-author sets answer as best' do
-        patch :set_best, params: { id: answer, question_id: myquestion2, answer: attributes_for(:answer), format: :js }
+        patch :set_best, params: { id: answer, question_id: myquestion, answer: attributes_for(:answer), format: :js }
         expect(response).to render_template :set_best
       end
     end
