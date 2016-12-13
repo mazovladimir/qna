@@ -117,10 +117,11 @@ RSpec.describe QuestionsController, type: :controller do
       end
 
       it 'changes question attributes' do
-        patch :update, params: { id: question }, format: :js
+        question.update(user: @user)
+        patch :update, params: { id: question, question: {title: 'my new title', body: 'my new body'} }, format: :js
         question.reload
-        expect(question.title).to eq 'more than 10 symbols'
-        expect(question.body).to eq 'More than 10 symbols'
+        expect(question.title).to eq 'my new title'
+        expect(question.body).to eq 'my new body'
       end
 
       it 'redirects to the updated question' do
@@ -133,6 +134,7 @@ RSpec.describe QuestionsController, type: :controller do
       before { patch :update, params: { id: question, question: attributes_for(:invalid_question) }, format: :js }
 
       it 'does not change question attributes' do
+        question.update(user: @user)
         question.reload
         expect(question.title).to eq 'more than 10 symbols'
         expect(question.body).to eq 'More than 10 symbols'
@@ -146,13 +148,19 @@ RSpec.describe QuestionsController, type: :controller do
     context 'author updates question' do
       it 'updates author question' do
         question.update(user: @user)
-        expect { patch :update, params: { id: question, question: attributes_for(:update_question) }, format: :js}.to change(question.reload, :body)
+        patch :update, params: { id: question, question: attributes_for(:update_question) }, format: :js
+        question.reload
+        expect(question.title).to eq 'I update question'
+        expect(question.body).to eq 'I update question'
       end
     end
 
     context 'non-author updates question' do
       it 'not update non-author question' do
-        expect { patch :update, params: { id: question, question: attributes_for(:update_question) }, format: :js}.to_not change(question.reload, :body)
+        patch :update, params: { id: question, question: attributes_for(:update_question) }, format: :js
+        question.reload
+        expect(question.title).to eq 'more than 10 symbols'
+        expect(question.body).to eq 'More than 10 symbols'
       end
     end
   end
