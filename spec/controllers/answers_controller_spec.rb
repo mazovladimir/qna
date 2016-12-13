@@ -132,14 +132,16 @@ RSpec.describe AnswersController, type: :controller do
       it 'author sets answer as best' do
         answer.question.update(user: @user)
         patch :set_best, params: { id: answer, question_id: myquestion, answer: attributes_for(:answer), format: :js }
-        expect(response).to render_template :set_best
+        answer.reload
+        expect(answer.best).to eq true
       end
     end
 
     context 'non-author updates answer' do
       it 'non-author sets answer as best' do
         patch :set_best, params: { id: answer, question_id: myquestion, answer: attributes_for(:answer), format: :js }
-        expect(response).to render_template :set_best
+        answer.reload
+        expect(answer.best).to eq false
       end
     end
   end
