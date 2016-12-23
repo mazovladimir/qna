@@ -4,7 +4,7 @@ class Answer < ActiveRecord::Base
 
   has_many :attachments, as: :attachable
 
-  accepts_nested_attributes_for :attachments
+  accepts_nested_attributes_for :attachments, reject_if: :all_blank
 
   validates :body, presence: true, length: { minimum: 10 }
 
