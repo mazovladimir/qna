@@ -1,6 +1,11 @@
 = div_for(answer)  do
   p #{answer.body}
 
+  p Attachments:
+    ul
+      - answer.attachments.each do |a|
+        li= a.file.identifier, a.file.url
+
   = link_to 'Best comment', set_best_question_answer_path(@question, answer), method: :patch, remote: true, class: 'best-answer-link', data: { answer_id: answer.id } if user_signed_in? && current_user.author_of?(@question)
   - if user_signed_in? && current_user.author_of?(answer)
     = link_to 'Edit comment', '', class: 'edit-answer-link', data: { answer_id: answer.id }
